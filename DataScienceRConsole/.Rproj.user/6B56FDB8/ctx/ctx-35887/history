@@ -1,0 +1,73 @@
+library(RSQLite)
+install.packages("RSQLite")
+library(RSQLite)
+install.packages(DBI)
+install.packages("DBI")
+install.packages("DBI")
+library(RSQLite)
+library(DBI)
+setwd("C:/Users/johnr/Desktop/Data Science Coursework/Project ")
+pwd()
+getwd()
+databaseConnection <- dbConnect(SQLite(), "DataScienceProjectDB.db3")
+cherwell2018PriceAverage <- dbSendQuery(databaseConnection, "SELECT ROUND(AVG(price_paid_GBP), 2)FROM houseprices INNER JOIN wards ON houseprices.ward_key=wards.ward_key INNER JOIN districts ON wards.district_key=districts.district_key WHERE transaction_date LIKE '%2018%' AND districts.district_key=1;"
+quit
+cherwell2018PriceAverage <- dbSendQuery(databaseConnection, "SELECT ROUND(AVG(price_paid_GBP), 2)FROM houseprices INNER JOIN wards ON houseprices.ward_key=wards.ward_key INNER JOIN districts ON wards.district_key=districts.district_key WHERE transaction_date LIKE '%2018%' AND districts.district_key=1;")
+dbFetch(cherwell2018PriceAverage)
+ward88BaAndClPercCh <- dbSendQuery(databaseConnection, "SELECT
+ROUND((((SELECT AVG(price_paid_GBP) AS average_price_2018 FROM houseprices WHERE transaction_date LIKE '%2018%' AND ward_key=88)
+- (SELECT AVG(price_paid_GBP) AS average_price_2017 FROM houseprices WHERE transaction_date LIKE '%2017%' AND ward_key=88))
+/ (SELECT AVG(price_paid_GBP) AS average_price_2017 FROM houseprices WHERE transaction_date LIKE '%2017%' AND ward_key=88)) * 100, 2)
+AS percentage_change;")
+dbClearResult()
+dbClearResult(cherwell2018PriceAverage)
+dbClearResult(ward88BaAndClPercCh)
+Cherwell2018PriceAverage <- dbGetQuery(databaseConnection, "SELECT ROUND(AVG(price_paid_GBP), 2)FROM houseprices INNER JOIN wards ON houseprices.ward_key=wards.ward_key INNER JOIN districts ON wards.district_key=districts.district_key WHERE transaction_date LIKE '%2018%' AND districts.district_key=1;")
+Cherwell2018PriceAverage
+rm(Cherwell2018PriceAverage)
+rm(cherwell2018PriceAverage)
+rm(ward88BaAndClPercCh)
+#Question 3. For a given ward in a particular district (e.g., City of Oxford, Cherwell, etc.) find
+the average prices of houses in a particular year such as 2018, 2019, etc
+#Question 3 For a given ward in a particular district (e.g., City of Oxford, Cherwell, etc.) find
+#the average prices of houses in a particular year such as 2018, 2019, etc
+Cherwell2018PriceAverage <- dbGetQuery(databaseConnection, "SELECT ROUND(AVG(price_paid_GBP), 2)FROM houseprices INNER JOIN wards ON houseprices.ward_key=wards.ward_key INNER JOIN districts ON wards.district_key=districts.district_key WHERE transaction_date LIKE '%2018%' AND districts.district_key=1;")
+print(Cherwell2018PriceAverage)
+#2. For a given ward in a particular district find the average increase in prices (in percent) between two years, for example, 2017 and 2018.
+Ward88_2017_18_Change <- dbGetQuery(databaseConnection, "SELECT
+ROUND((((SELECT AVG(price_paid_GBP) AS average_price_2018 FROM houseprices WHERE transaction_date LIKE '%2018%' AND ward_key=88)
+- (SELECT AVG(price_paid_GBP) AS average_price_2017 FROM houseprices WHERE transaction_date LIKE '%2017%' AND ward_key=88))
+/ (SELECT AVG(price_paid_GBP) AS average_price_2017 FROM houseprices WHERE transaction_date LIKE '%2017%' AND ward_key=88)) * 100, 2)
+AS percentage_change;")
+print(Ward88_2017_18_Change)
+#5. Considering all districts (in Oxfordshire), find a ward which has the highest house
+#price in a particular (quarter of a) year, for example, Mar 2019 or Dec 2019.
+#Find the ward with highest house price in Q1 2019
+maxPurchasePriceQ12019 <- dbGetQuery(databaseConnection, "SELECT MAX(price_paid_GBP), ward_key, transaction_key FROM houseprices WHERE transaction_date >= '2019-01-00' AND transaction_date <= '2019-04-01';")
+print(maxPurchasePriceQ12019)
+rm(maxPurchasePriceQ12019)
+maxPurchasePriceQ12019 <- dbGetQuery(databaseConnection, "SELECT MAX(price_paid_GBP), transaction_key, wards.ward_name, transaction_date FROM houseprices INNER JOIN wards ON houseprices.ward_key=wards.ward_key WHERE transaction_date >= '2019-01-00' AND transaction_date <= '2019-04-01';")
+print(maxPurchasePriceQ12019)
+minPurchasePriceQ32018 <- dbGetQuery(databaseConnection, "SELECT MIN(price_paid_GBP), transaction_key, wards.ward_name, transaction_date FROM houseprices INNER JOIN wards ON houseprices.ward_key=wards.ward_key WHERE transaction_date >= '2018-07-00' AND transaction_date < '2018-10-01';")
+print(minPurchasePriceQ32018)
+rm(minPurchasePriceQ32018)
+minPurchasePriceQ22017 <- dbGetQuery(databaseConnection, "SELECT MIN(price_paid_GBP), transaction_key, wards.ward_name, transaction_date FROM houseprices INNER JOIN wards ON houseprices.ward_key=wards.ward_key WHERE transaction_date >= '2017-04-00' AND transaction_date < '2017-07-01';")
+print(minPurchasePriceQ22017)
+#7. Based on the data source (you use), find a broadband speed (average downland), or (superfast) broadband availability (%), in a particular ward (or a #postcode) of a district.
+BanbrcrossNeiAveDLSpeeds <- dbGetQuery(databaseConnection, "SELECT average_download_speed_Mbs, broadband.ward_key, wards.ward_name, districts.district_name FROM broadband INNER JOIN wards ON broadband.ward_key=wards.ward_key INNER JOIN districts ON wards.district_key=districts.district_key WHERE broadband.ward_key=3;")
+print(BanbrcrossNeiAveDLSpeeds)
+#Question 3 For a given ward in a particular district (e.g., City of Oxford, Cherwell, etc.) find
+#the average prices of houses in a particular year such as 2018, 2019, etc
+Cherwell2018PriceAverage <- dbGetQuery(databaseConnection, "SELECT ROUND(AVG(price_paid_GBP), 2)FROM houseprices INNER JOIN wards ON houseprices.ward_key=wards.ward_key INNER JOIN districts ON wards.district_key=districts.district_key WHERE transaction_date LIKE '%2018%' AND districts.district_key=1;")
+print(Cherwell2018PriceAverage)
+#2. For a given ward in a particular district find the average increase in prices (in percent) between two years, for example, 2017 and 2018.
+Ward88_2017_18_Change <- dbGetQuery(databaseConnection, "SELECT
+ROUND((((SELECT AVG(price_paid_GBP) AS average_price_2018 FROM houseprices WHERE transaction_date LIKE '%2018%' AND ward_key=88)
+- (SELECT AVG(price_paid_GBP) AS average_price_2017 FROM houseprices WHERE transaction_date LIKE '%2017%' AND ward_key=88))
+/ (SELECT AVG(price_paid_GBP) AS average_price_2017 FROM houseprices WHERE transaction_date LIKE '%2017%' AND ward_key=88)) * 100, 2)
+AS percentage_change;")
+print(Ward88_2017_18_Change)
+maxPurchasePriceQ12019 <- dbGetQuery(databaseConnection, "SELECT MAX(price_paid_GBP), transaction_key, wards.ward_name, transaction_date FROM houseprices INNER JOIN wards ON houseprices.ward_key=wards.ward_key WHERE transaction_date >= '2019-01-00' AND transaction_date < '2019-04-01';")
+print(maxPurchasePriceQ12019)
+quit()
+source('C:/Users/johnr/OneDrive/Data Science Coursework/Project/DataScienceRConsole/DataScienceRScript.R')

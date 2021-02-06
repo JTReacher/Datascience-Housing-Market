@@ -1,0 +1,22 @@
+{
+    "type": [
+        2,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        2
+    ],
+    "data": [
+        "\nR version 4.0.3 (2020-10-10) -- \"Bunny-Wunnies Freak Out\"\nCopyright (C) 2020 The R Foundation for Statistical Computing\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\n\nR is free software and comes with ABSOLUTELY NO WARRANTY.\nYou are welcome to redistribute it under certain conditions.\nType 'license()' or 'licence()' for distribution details.\n\n  Natural language support but running in an English locale\n\nR is a collaborative project with many contributors.\nType 'contributors()' for more information and\n'citation()' on how to cite R or R packages in publications.\n\n",
+        "Type 'demo()' for some demos, 'help()' for on-line help, or\n'help.start()' for an HTML browser interface to help.\nType 'q()' to quit R.\n\n[Workspace loaded from C:/Users/johnr/OneDrive/Data Science Coursework/Project/DataScienceRConsole/.RData]\n\n",
+        "Loading required package: RSQLite\n",
+        "> ",
+        "source('C:/Users/johnr/OneDrive/Data Science Coursework/Project/DataScienceRConsole/DataScienceRScript.R')",
+        "Error in install.packages : Updating loaded packages\nError in install.packages : Updating loaded packages\n",
+        "Error in setwd(\"C:/Users/johnr/Desktop/Data Science Coursework/Project \") : \n  cannot change working directory\n",
+        "\nRestarting R session...\n\n"
+    ]
+}
